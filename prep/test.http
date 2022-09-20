@@ -1,0 +1,26 @@
+# Create a .env file with the following tuples, replace values according to your datacenter, idp and credentials
+# cf_login=https://login.cf.eu30.hana.ondemand.com
+# cf_api=https://api.cf.eu30.hana.ondemand.com
+# idp_origin_key=i123abc-platform
+# idp_username=tech-btp-cfapi
+# idp_password=xxxxxxxxxxxxxx
+
+# @name access_token_request
+POST {{$dotenv cf_login}}/oauth/token
+Accept: application/json;charset=utf8
+Authorization: Basic cf:
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password
+&username={{$dotenv idp_username}}
+&password={{$dotenv idp_password}}
+# comment out the line below to test with SAP ID service instead of a custom IdP
+&login_hint={"origin":"{{$dotenv idp_origin_key}}"}
+
+@accToken = {{access_token_request.response.body.access_token}}
+
+###
+
+GET {{$dotenv cf_api}}/v3/spaces
+Accept: application/json;charset=utf8
+Authorization: Bearer {{accToken}}

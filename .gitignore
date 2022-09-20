@@ -1,0 +1,6 @@
+mta_archives/
+node_modules/
+default-*.json
+.DS_Store
+.env
+**/package-lock.json

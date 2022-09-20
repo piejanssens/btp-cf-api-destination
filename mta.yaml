@@ -1,0 +1,56 @@
+ID: cfapi
+_schema-version: "3.1"
+version: 0.0.1
+
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+
+  - name: cfapi-srv
+    type: nodejs
+    path: srv
+    build-parameters:
+      ignore:
+        - node_modules/
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: cfapi-uaa
+      - name: cfapi-dest
+
+  - name: cfapi-app
+    type: approuter.nodejs
+    path: app
+    build-parameters:
+      ignore:
+        - node_modules/
+    parameters:
+      memory: 256M
+    requires:
+      - name: cfapi-uaa
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv
+          url: ~{srv-url}
+          forwardAuthToken: true
+
+resources:
+  - name: cfapi-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+
+  - name: cfapi-dest
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite

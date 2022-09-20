@@ -1,0 +1,11 @@
+# Import destination on subaccount level
+# clientSecret=MUST_BE_KEPT_EMPTY (CF UAA spec)
+Name=CFAPI
+Type=HTTP
+clientId=cf
+Authentication=OAuth2Password
+tokenServiceURL=https\://login.cf.eu30.hana.ondemand.com/oauth/token?login_hint\=%7B%22origin%22\:%22ai367d2ld-platform%22%7D
+ProxyType=Internet
+URL=https\://api.cf.eu30.hana.ondemand.com
+User=!!!FILL_USERNAME_&_PASSWORD
+Description=!!!Check region on both URL's. Update origin value in tokenServiceURL

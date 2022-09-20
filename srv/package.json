@@ -1,0 +1,14 @@
+{
+  "name": "cfapi-srv",
+  "dependencies": {
+    "express": "latest",
+    "@sap-cloud-sdk/http-client": "latest",
+    "@sap-cloud-sdk/connectivity": "latest",
+    "@sap/xsenv": "latest",
+    "@sap/xssec": "latest",
+    "passport": "latest"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

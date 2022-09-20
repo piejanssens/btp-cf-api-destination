@@ -1,0 +1,10 @@
+{
+  "xsappname": "cfapi",
+  "tenant-mode": "dedicated",
+  "oauth2-configuration": {
+    "token-validity": 3600,
+    "redirect-uris": [
+      "https://*cfapi-app.cfapps.*.hana.ondemand.com/login/callback"
+    ]
+  }
+}
